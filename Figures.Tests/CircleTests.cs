@@ -2,19 +2,17 @@ namespace Figures.Tests;
 
 public class CircleTests
 {
-    // MSDN - double has a precision of 15-16 digits
-    private const double Epsilon = 1e-15;
-    
     [Test]
     [TestCase(1, 1 * 1 * Math.PI)]
     [TestCase(2, 2 * 2 * Math.PI)]
     [TestCase(331, 331 * 331 * Math.PI)]
     [TestCase(2567, 2567 * 2567 * Math.PI)]
+    [TestCase(25677, 25677 * 25677 * Math.PI)]
     public void GetArea_CountsProperly(double radius, double expected)
     {
         var circle = new Circle(radius);
         var actual = circle.GetArea();
-        Assert.That(actual, Is.EqualTo(expected).Within(Epsilon));
+        Assert.That(actual, Is.EqualTo(expected).Within(double.Epsilon));
     }
     
     [Test]
@@ -22,10 +20,11 @@ public class CircleTests
     [TestCase(2, 2 * 2 * Math.PI)]
     [TestCase(331, 331 * 331 * Math.PI)]
     [TestCase(2567, 2567 * 2567 * Math.PI)]
+    [TestCase(25677, 25677 * 25677 * Math.PI)]
     public void Static_GetArea_CountsProperly(double radius, double expected)
     {
         var actual = Circle.GetArea(radius);
-        Assert.That(actual, Is.EqualTo(expected).Within(Epsilon));
+        Assert.That(actual, Is.EqualTo(expected).Within(double.Epsilon));
     }
     
     [Test]
@@ -49,6 +48,6 @@ public class CircleTests
     [TestCase(0)]
     public void Static_GetArea_RadiusCantBeNegativeOrZeroOrNaN(double radius)
     {
-        Assert.Throws<ArgumentException>(() => new Circle(radius));
+        Assert.Throws<ArgumentException>(() => Circle.GetArea(radius));
     }
 }

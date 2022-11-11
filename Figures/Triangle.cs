@@ -8,6 +8,7 @@ public class Triangle : IFigure
 
     public Triangle(double aSide, double bSide, double cSide)
     {
+        ValidateSides(aSide, bSide, cSide);
         _aSide = aSide;
         _bSide = bSide;
         _cSide = cSide;
@@ -17,9 +18,24 @@ public class Triangle : IFigure
     {
         return GetArea(_aSide, _bSide, _cSide);
     }
-
+    
+    public bool IsRight()
+    {
+        return IsRight(_aSide, _bSide, _cSide);
+    }
+    
+    public static bool IsRight(double aSide, double bSide, double cSide)
+    {
+        ValidateSides(aSide, bSide, cSide);
+        return
+            Math.Abs(aSide * aSide - (bSide * bSide + cSide * cSide)) < double.Epsilon ||
+            Math.Abs(bSide * bSide - (aSide * aSide + cSide * cSide)) < double.Epsilon ||
+            Math.Abs(cSide * cSide - (aSide * aSide + bSide * bSide)) < double.Epsilon;
+    }
+    
     public static double GetArea(double aSide, double bSide, double cSide)
     {
+        ValidateSides(aSide, bSide, cSide);
         var halfPerimeter = (aSide + bSide + cSide) / 2;
         return Math.Sqrt((halfPerimeter - aSide) * (halfPerimeter - bSide) * (halfPerimeter - cSide) * halfPerimeter);
     }
